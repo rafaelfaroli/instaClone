@@ -1,112 +1,132 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import { StatusBar } from 'expo-status-bar';
+import { FlatList, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Component } from 'react/cjs/react.production.min';
+import Lista from './components/Lista';
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      feed: [
+        {
+          id: '1',
+          nome: 'Lucas Silva',
+          descricao: 'Mais um dia de muitos bugs :)',
+          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png',
+          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto1.png',
+          likeada: false,
+          likers: 0
+        },
+        {
+          id: '2',
+          nome: 'Matheus',
+          descricao: 'Isso sim é ser raiz!!!!!',
+          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png',
+          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto2.png',
+          likeada: false,
+          likers: 0
+        },
+        {
+          id: '3',
+          nome: 'Jose Augusto',
+          descricao: 'Bora trabalhar Haha',
+          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil3.png',
+          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto3.png',
+          likeada: false,
+          likers: 3
+        },
+        {
+          id: '4',
+          nome: 'Gustavo Henrique',
+          descricao: 'Isso sim que é TI!',
+          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png',
+          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto4.png',
+          likeada: false,
+          likers: 1
+        },
+        {
+          id: '5',
+          nome: 'Guilherme',
+          descricao: 'Boa tarde galera do insta...',
+          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png',
+          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto5.png',
+          likeada: false,
+          likers: 32
+        }
+      ]
+    }
+  }
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changesx">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity>
+            <Image
+              source={require('./img/logo.png')}
+              style={styles.logo}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image
+              source={require('./img/send.png')}
+              style={styles.send}
+            />
+          </TouchableOpacity>
         </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item) => item.id}
+          data={this.state.feed}
+          renderItem={({item}) => <Lista data={item} />} 
+        />
+
+        <View style={styles.body}>
+
+        </View>
+
+        <View style={styles.footer}>
+
+        </View>
+
+        <StatusBar style="auto" />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginTop: 20
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  header: {
+    height: 55,
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderBottomWidth: 0.3,
+    shadowColor: '#000',
+    elevation: 1
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  logo: {
+
   },
-  highlight: {
-    fontWeight: '700',
+  send: {
+    width: 23,
+    height: 23
   },
+  body: {
+    flex: 8
+  },
+  footer: {
+    flex: 1
+  }
 });
 
 export default App;
